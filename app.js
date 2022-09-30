@@ -10,8 +10,11 @@ const playerController = (() => {
     const playerTwo = 'O';
     let lastMove = '';
     let moves = 0;
+    let gameOver = (() => {
+        console.log('Game Over!');
+    })
 
-    return {playerOne, playerTwo, lastMove, moves}
+    return {playerOne, playerTwo, lastMove, moves, gameOver}
 })()
 
 
@@ -31,6 +34,9 @@ const gameboard = (() => {
 
 const displayController = (() => {
     let boardSquares = document.querySelectorAll('.boardSquare');
+    let restartGame = document.querySelector('.restart');
+
+
 
     boardSquares.forEach((square) => {
         square.addEventListener('mousedown', (e) => {
@@ -48,8 +54,20 @@ const displayController = (() => {
                 console.log('hi', e.target.attributes.data.value);
                 console.log(gameboard.gameboardArray[e.target.attributes.data.value])
                 e.target.innerText = gameboard.gameboardArray[e.target.attributes.data.value]
+            } 
+            if (playerController.moves === 9 ){
+                playerController.gameOver();
             }
         })
+    })
+
+    restartGame.addEventListener('click', () => {
+        boardSquares.forEach((el) => {
+           return el.innerHTML = '';
+        });
+        let newArray =  new Array(9).fill('');
+        gameboard.gameboardArray = newArray;
+        playerController.moves = 0;
     })
 
 })();
