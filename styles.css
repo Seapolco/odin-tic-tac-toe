@@ -29,7 +29,9 @@ h1 {
 
 .boardSquare {
     color: white;
-    font-size: 10rem;
+    font-size: 5rem;
+    max-height: 114px;
+    max-width:114px;
     display:grid;
     aspect-ratio: 1;
     justify-content: center;
