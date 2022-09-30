@@ -19,6 +19,7 @@ const playerController = (() => {
     let lastMove = '';
     let moves = 0;
 
+
     let winningPositions = [
         [0,1,2],
         [3,4,5],
@@ -27,55 +28,58 @@ const playerController = (() => {
         [1,4,7],
         [2,5,8],
         [0,4,8],
-        [6,4,2],
+        [6,4,2]
     ];
 
-    let winners =((playerArray, winArray) => {
+
+    let winners = ((playerArray, winArray) => {
         let wins = [];
         let winningNumbers = []
         let streak = false;
         
         playerArray.forEach((el, index) => {
-          
         
-            if(winArray.includes(el) && winningNumbers.includes(el) !== true) {
-              
+        
+            if(winArray.includes(+el) && winningNumbers.includes(+el) !== true) {
+            
             wins.push(index);
-            winningNumbers.push(el)
+            winningNumbers.push(+el)
             // console.log(wins)
             // console.log(winningNumbers)
-          }
+        }
         
         })
-          // console.log(wins)
-          
-          if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
+        // console.log(wins)
+        
+        if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
             console.log(wins)
             streak = true;
-          }
-          // console.log(wins)
-          // console.log(streak)
+        }
+        // console.log(wins)
+        // console.log(streak)
             return streak;
-                     
-    });
-
-    let determineWin = ((winningList, winningFunction) {
-        let win = false;
-        
-        winningList.forEach((el) => {
-          if(winningFunction(ga, el) === true) {
-            win = true;
-            console.log(el)
-          }
+                    
         })
-        return win;
-    });
     
-    let gameOver = (() => {
-        console.log('Game Over!');
+    let determineWins = ((winningList, playersPlacement) => {
+      let win = false;
+      
+      winningList.forEach((el) => {
+        if(winners(playersPlacement, el) === true) {
+          win = true;
+          console.log(el)
+        }
+      })
+      return win;
     })
 
-    return {playerOne, playerTwo, lastMove, moves, winningPositions, winners, determineWin, gameOver}
+
+    
+    let gameOver = ((message = 'Game Over!') => {
+        console.log(message);
+    })
+
+    return {playerOne, playerTwo, lastMove, moves, winningPositions, winners,determineWins, gameOver}
 })()
 
 
@@ -124,6 +128,13 @@ const displayController = (() => {
                     playerController.gameOver();
 
                 }
+                if(playerController.determineWins(playerController.winningPositions, playerController.playerOne.placement) === true) {
+                    playerController.gameOver('Player One Wins!');
+                }
+                if(playerController.determineWins(playerController.winningPositions, playerController.playerTwo.placement) === true) {
+                    playerController.gameOver('Player Two Wins!');
+                
+                }
 
             }
         })
@@ -142,6 +153,16 @@ const displayController = (() => {
     })
 
 })();
+
+
+// const playerOne = {
+//     marker: 'X',
+//     placement: []
+// };
+// const playerTwo = {
+//     marker: 'O',
+//     placement: []
+// };
 
 
 
@@ -163,3 +184,46 @@ const displayController = (() => {
 // let moveX = 'X';
 // let moveO = '0';
 // let lastMove = '';
+
+
+
+// let winners = (playerArray, winArray) => {
+//     let wins = [];
+//     let winningNumbers = []
+//     let streak = false;
+    
+//     playerArray.forEach((el, index) => {
+      
+    
+//         if(winArray.includes(el) && winningNumbers.includes(el) !== true) {
+          
+//         wins.push(index);
+//         winningNumbers.push(el)
+//         // console.log(wins)
+//         // console.log(winningNumbers)
+//       }
+    
+//     })
+//       console.log(wins)
+      
+//       if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
+//         console.log(wins)
+//         streak = true;
+//       }
+//       console.log(wins)
+//       // console.log(streak)
+//         return streak;
+                 
+// };
+
+// let determineWin = (winningList, playersPlacement) => {
+//     let win = false;
+//     console.log(winningList)
+//     winningList.forEach((el) => {
+//       if(winners(playersPlacement, el) === true) {
+//         win = true;
+//         console.log(el)
+//       }
+//     })
+//     return win;
+// };
