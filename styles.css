@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    gap: 4rem;
+    padding: 3rem;
+
+
+}
+
+h1 {
+    text-align: center;
+}
+
+.gameBoard {
+    display: grid;
+    height: 40vh;
+    margin: 0 auto;
+    width: 40vw;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.boardSquare {
+    color: white;
+    font-size: 10rem;
+    display:grid;
+    aspect-ratio: 1;
+    justify-content: center;
+    align-content: center;
+    background-color: black;
+    border: solid white 2px;
+}
