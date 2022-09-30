@@ -41,22 +41,24 @@ const displayController = (() => {
     boardSquares.forEach((square) => {
         square.addEventListener('mousedown', (e) => {
             // let {playerOne, playerTwo, lastMove, moves} = playerController;
-            if(playerController.moves<9) {
-
-                playerController.moves++
-                console.log(playerController.moves);
-                if(playerController.moves % 2 === 1) {
-                    gameboard.gameboardArray[e.target.attributes.data.value] = playerController.playerOne;
-                } else if (playerController.moves % 2 === 0) {
-                    gameboard.gameboardArray[e.target.attributes.data.value] = playerController.playerTwo;
+            if(gameboard.gameboardArray[e.target.attributes.data.value] === '') {
+                if(playerController.moves<9) {
+                    playerController.moves++
+                    console.log(playerController.moves);
+                    if(playerController.moves % 2 === 1) {
+                        gameboard.gameboardArray[e.target.attributes.data.value] = playerController.playerOne;
+                    } else if (playerController.moves % 2 === 0) {
+                        gameboard.gameboardArray[e.target.attributes.data.value] = playerController.playerTwo;
+                    }
+                    // gameboard.gameboardArray[e.target.attributes.data.value] = 'hi';
+                    console.log('hi', e.target.attributes.data.value);
+                    console.log(gameboard.gameboardArray[e.target.attributes.data.value])
+                    e.target.innerText = gameboard.gameboardArray[e.target.attributes.data.value]
+                } 
+                if (playerController.moves === 9 ){
+                    playerController.gameOver();
                 }
-                // gameboard.gameboardArray[e.target.attributes.data.value] = 'hi';
-                console.log('hi', e.target.attributes.data.value);
-                console.log(gameboard.gameboardArray[e.target.attributes.data.value])
-                e.target.innerText = gameboard.gameboardArray[e.target.attributes.data.value]
-            } 
-            if (playerController.moves === 9 ){
-                playerController.gameOver();
+
             }
         })
     })
@@ -68,6 +70,7 @@ const displayController = (() => {
         let newArray =  new Array(9).fill('');
         gameboard.gameboardArray = newArray;
         playerController.moves = 0;
+
     })
 
 })();
