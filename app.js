@@ -51,8 +51,11 @@ const playerController = (() => {
         })
         // console.log(wins)
         
-        if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
-            console.log(wins)
+        // if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
+        //     console.log(wins)
+        //     streak = true;
+        // }
+        if(wins.length === 3) {
             streak = true;
         }
         // console.log(wins)
@@ -86,15 +89,9 @@ const playerController = (() => {
 const gameboard = (() => {
     let gameboardArray = ['','','','','','','','',''];
    
-    // return gameboardArray.forEach((el,index) => {
-    //     boardSquares[index].innerHTML = el;
-    // })
 
     return {gameboardArray}
     
-
-
-
 })();
 
 const displayController = (() => {
@@ -107,7 +104,7 @@ const displayController = (() => {
         square.addEventListener('mousedown', (e) => {
             // let {playerOne, playerTwo, lastMove, moves} = playerController;
             if(gameboard.gameboardArray[e.target.attributes.data.value] === '') {
-                if(playerController.moves<9) {
+                if(playerController.moves<9 && playerController.determineWins(playerController.winningPositions, playerController.playerOne.placement) !== true && playerController.determineWins(playerController.winningPositions, playerController.playerTwo.placement) !== true) {
                     playerController.moves++
                     console.log(playerController.moves);
                     if(playerController.moves % 2 === 1) {
@@ -153,77 +150,3 @@ const displayController = (() => {
     })
 
 })();
-
-
-// const playerOne = {
-//     marker: 'X',
-//     placement: []
-// };
-// const playerTwo = {
-//     marker: 'O',
-//     placement: []
-// };
-
-
-
-
-// boardSquares.forEach((square) => {
-//     square.addEventListener('mousedown', (e) => {
-
-//         if(lastMove === '' || lastMove === moveO) {
-//             e.target.innerText = moveX;
-//             lastMove = moveX;
-//         } else {
-//             e.target.innerText = moveO;
-//             lastMove = moveO;
-//         }
-
-//     })
-// })
-
-// let moveX = 'X';
-// let moveO = '0';
-// let lastMove = '';
-
-
-
-// let winners = (playerArray, winArray) => {
-//     let wins = [];
-//     let winningNumbers = []
-//     let streak = false;
-    
-//     playerArray.forEach((el, index) => {
-      
-    
-//         if(winArray.includes(el) && winningNumbers.includes(el) !== true) {
-          
-//         wins.push(index);
-//         winningNumbers.push(el)
-//         // console.log(wins)
-//         // console.log(winningNumbers)
-//       }
-    
-//     })
-//       console.log(wins)
-      
-//       if(wins[0] + 1 === wins[1] && wins[1] + 1 === wins[2]) {
-//         console.log(wins)
-//         streak = true;
-//       }
-//       console.log(wins)
-//       // console.log(streak)
-//         return streak;
-                 
-// };
-
-// let determineWin = (winningList, playersPlacement) => {
-//     let win = false;
-//     console.log(winningList)
-//     winningList.forEach((el) => {
-//       if(winners(playersPlacement, el) === true) {
-//         win = true;
-//         console.log(el)
-//       }
-//     })
-//     return win;
-// };
