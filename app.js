@@ -90,6 +90,102 @@ const computerController = (() => {
       return win;
     })
 
+    let calculateBestMove=((possPosition, winPosition) =>{
+
+        let random = (max) => {
+            return Math.floor(Math.random() * max);
+        }
+	
+        let remainingWinners = [];
+        let winnerooniThree = [];
+        let winnerooniTwo = [];
+        let winnerooniOne = [];
+        
+        winPosition.forEach((arr,index) => {
+          
+        possPosition.forEach((p) => {
+          if(arr.indexOf(p) >= 0) {
+            remainingWinners.push(index)
+          }
+        //   remainingWinners.push()
+        //   console.log(p,arr,index, arr.indexOf(p),winPosition.indexOf(arr))
+        })
+      })
+      
+        let sortedWinners = remainingWinners.sort();
+        
+        let win = sortedWinners.reduce(function (acc, curr) {
+        return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+      }, {});
+        
+    //     for(key in win) {
+    //     if(win[key] === 3) {
+    //       winnerooni.push(key)
+    //     }
+    //   }
+
+    for(key in win) {
+        if(win[key] === 3) {
+          winnerooniThree.push(key)
+        } else if(win[key] === 2) {
+          winnerooniTwo.push(key)
+        } else if(win[key] === 1) {
+          winnerooniOne.push(key)
+        }
+    }
+
+        
+    if(winnerooniThree.length > 0) {
+        console.log(winnerooniThree)
+        let wThreefn = Number(winnerooniThree[0])
+        console.log(wThreefn)
+        console.log(winningPositions[wThreefn])
+        let targetWP = winningPositions[wThreefn];
+        let randomWinMove = targetWP[random(targetWP.length)];
+        console.log('RANDOM WIN 3',randomWinMove)
+          return randomWinMove
+        } else if(winnerooniTwo.length > 0) {
+          let wTwofn = Number(winnerooniTwo[0])
+            console.log(wTwofn)
+            console.log(winningPositions[wTwofn])
+              let targetWP = winningPositions[wTwofn];
+            let randomWinMove = targetWP[random(targetWP.length)];
+        console.log('RANDOM WIN 2',randomWinMove)
+          return randomWinMove
+        } else if(winnerooniOne.length > 0) {
+          let wOnefn = Number(winnerooniOne[0])
+            console.log(wOnefn)
+            console.log(winningPositions[wOnefn])
+              let targetWP = winningPositions[wOnefn];
+            let randomWinMove = targetWP[random(targetWP.length)];
+        console.log('RANDOM WIN 1',randomWinMove)
+          return randomWinMove
+        }
+
+
+
+
+
+
+
+        // return winnerooni
+        // console.log('winnerooni', winnerooni);
+        // let wfn = Number(winnerooni[0])
+        // console.log('WINNEROONI 0',wfn)
+        // // console.log(winningPositions[wfn])
+        // let targetWP = winningPositions[wfn];
+        // console.log('WINNINGPOSITIONS', targetWP);
+        // let randomWinMove = targetWP[random(targetWP.length)];
+        // if(randomWinMove === undefined) {
+        //     return possiblePositions[random(possiblePositions.length)];
+        // }
+        // console.log('randomWinMove',randomWinMove)
+        
+        // // console.log('RANDOM WIN',randomWinMove)
+        // return randomWinMove
+        
+    })
+
 
     const computerPlayerEventListener = (e) => {
 
@@ -113,16 +209,23 @@ const computerController = (() => {
                         console.log('possiblePositions',possiblePositions)
                         console.log('PLAYER ONE PLACEMENT',playerOne.placement);
                         gameboard.gameboardArray[value] = playerOne.marker;
-                        e.target.innerText = gameboard.gameboardArray[value]
+                        e.target.innerText = gameboard.gameboardArray[value];
 
-                         let randomIndex = random(possiblePositions.length -1);
-                        let randomNumber = possiblePositions[randomIndex];
-                        computerPlayer.placement.push(randomNumber)
-                        console.log('random number',randomNumber);
-                        console.log('COMPUTERS RANDOM PLACEMENT INDEX', randomNumber)
-                        boardSquares[randomNumber].innerHTML = computerController.computerPlayer.marker
-                        possiblePositions.splice(possiblePositions.indexOf(randomNumber), 1)
-                        console.log(randomIndex);
+                        // let possibleWinners = calculateBestMove(possiblePositions, winningPositions);
+                        let computerBestMove = calculateBestMove(possiblePositions, winningPositions);
+                        console.log(computerBestMove)
+                        // let randomIndex = random(possiblePositions.length -1);
+                        // let randomNumber = possiblePositions[randomIndex];
+                        computerPlayer.placement.push(computerBestMove);
+                        possiblePositions.splice(possiblePositions.indexOf(computerBestMove), 1);
+                        console.log('POSPOSITIONafterComp', possiblePositions)
+                        // console.log('random number',randomNumber);
+                        // console.log('COMPUTERS RANDOM PLACEMENT INDEX', randomNumber)
+                        boardSquares[computerBestMove].innerHTML = computerController.computerPlayer.marker
+                        
+                        // console.log(randomIndex);
+
+                        
                         moves++
                     }
                 }   //else if (moves % 2 === 0) {
@@ -163,13 +266,15 @@ const computerController = (() => {
         }
     }
 
+
+
     
 
     let gameOver = ((message = 'Game Over!') => {
         console.log(message);
     })
 
-    return {faceComputer, computerPlayer, determineWins, computerPlayerEventListener, gameOver, winners, winningPositions, moves}
+    return {faceComputer, computerPlayer, determineWins, computerPlayerEventListener, gameOver, winners, winningPositions, moves,calculateBestMove}
 })()
 
 
@@ -357,3 +462,42 @@ const displayController = (() => {
     })
 
 })();
+
+/*
+
+
+function calculateBestMove(possPosition, winPosition) {
+	
+    let remainingWinners = [];
+    let winnerooni = [];
+    
+    winningPositions.forEach((arr,index) => {
+      
+    possiblePositions.forEach((p) => {
+      if(arr.indexOf(p) >= 0) {
+        remainingWinners.push(index)
+      }
+      remainingWinners.push()
+      console.log(p,arr,index, arr.indexOf(p),winningPositions.indexOf(arr))
+    })
+  })
+  
+    let sortedWinners = remainingWinners.sort();
+    
+    let win = sortedWinners.reduce(function (acc, curr) {
+    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+  }, {});
+    
+    for(key in win) {
+    if(win[key] === 3) {
+      winnerooni.push(key)
+    }
+  }
+    return winnerooni
+    
+  }
+  
+  calculateBestMove(possiblePositions, playerOnePlacement)
+
+
+  */
